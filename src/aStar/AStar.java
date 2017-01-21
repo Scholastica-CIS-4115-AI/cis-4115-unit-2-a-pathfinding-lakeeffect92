@@ -77,13 +77,14 @@ public class AStar {
                                 	frontierList.add(neighbor);
                                     neighbor.setPreviousNode(current);
                                     neighbor.distanceFromStart = newDistanceFromStart;
-                                    //neighbor.heuristicDistanceToGoal = getEstimatedDistanceToGoal(neighbor.x, neighbor.y, map.getGoalLocation().x, map.getGoalLocation().y);
-                                    //neighbor.TotalDistanceFromGoal = neighbor.distanceFromStart + neighbor.heuristicDistanceToGoal;
-                                    neighbor.TotalDistanceFromGoal = neighbor.distanceFromStart;
+                                    neighbor.heuristicDistanceToGoal = getEstimatedDistanceToGoal(neighbor.x, neighbor.y, map.getGoalLocation().x, map.getGoalLocation().y);
+                                    neighbor.TotalDistanceFromGoal = neighbor.distanceFromStart + neighbor.heuristicDistanceToGoal;
+                                    //neighbor.TotalDistanceFromGoal = neighbor.distanceFromStart;
                                     //keep the frontier list sorted so you explore the best nodes first
-                                    //Collections.sort(frontierList);
+                                    Collections.sort(frontierList);
                                 } else {
                                 	System.out.println("Neighbor already on Fronter list... do nothing?");
+                                	if(newDistanceFromStart<=neighbor.distanceFromStart){
                                 	// If the node is already on the frontier, do we need to do anything?  
                                 	// What if this path to the node is better than the first path we found to the node?
                                 	// You need to check if the new distance to the neighbor, newDistanceFromStart, is less than the old distance to the neighbor, neighbor.distanceFromStart) {
@@ -93,7 +94,13 @@ public class AStar {
                                         //   --- Set the neighbor's heuristic distance to goal using getEstimatedDistanceToGoal()
                                         //   --- Set the neighbor's total distance from goal to the distance from start plus the heuristic distance to goal
                                         //   --- Make sure the frontier list stays sorted
-  
+                                		neighbor.setPreviousNode(current);
+                                        neighbor.distanceFromStart = newDistanceFromStart;
+                                        neighbor.heuristicDistanceToGoal = getEstimatedDistanceToGoal(neighbor.x, neighbor.y, map.getGoalLocation().x, map.getGoalLocation().y);
+                                        neighbor.TotalDistanceFromGoal = neighbor.distanceFromStart + neighbor.heuristicDistanceToGoal;             
+                                        Collections.sort(frontierList);
+                                		
+                                	}
                                 }
                         
                         }
